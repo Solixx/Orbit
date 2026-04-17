@@ -1,0 +1,15 @@
+node_modules
+dist
+.env
+.git
+.github
+.cursor
+*.md
+*.d.ts
+*.js.map
+session-store.json
+vitest.config.ts
+biome.json
+.editorconfig
+.nvmrc
+src/__tests__

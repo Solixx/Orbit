@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="theme-color" content="#0b0b11" id="meta-theme">
+  <meta name="description" content="Self-hosted web UI for Orbit — remote Cursor CLI access from phone or tablet">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" type="image/svg+xml" href="/icon-192.svg">
+  <link rel="apple-touch-icon" href="/icon-192.svg">
+  <link rel="stylesheet" href="/styles.css">
+  <title>Orbit</title>
+</head>
+<body>
+
+  <!-- ── Auth Gate ─────────────────────────────────────── -->
+  <div id="auth-gate" class="hidden">
+    <div class="auth-card">
+      <div class="auth-logo">Orbit</div>
+      <p class="auth-sub">Enter your access token to connect</p>
+      <input type="password" id="auth-input" placeholder="Access token" autocomplete="off">
+      <button id="auth-submit" type="button">Connect</button>
+      <div class="auth-error hidden" id="auth-error">Invalid token</div>
+    </div>
+  </div>
+
+  <!-- ── App Shell ─────────────────────────────────────── -->
+  <div class="app-shell">
+
+    <!-- Sidebar (drawer on mobile, fixed on tablet+) -->
+    <aside id="sidebar" class="sidebar">
+      <div class="sidebar-header">
+        <span class="sidebar-logo">Orbit</span>
+        <button id="new-chat-btn" type="button" class="icon-btn new-chat-btn" aria-label="New chat" title="New chat">
+          <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <button id="sidebar-close" type="button" class="icon-btn sidebar-close-btn" aria-label="Close menu">
+          <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+        </button>
+      </div>
+
+      <div class="sidebar-chats" id="sidebar-chats">
+        <div class="sidebar-chats-empty" id="sidebar-chats-empty">No chats yet</div>
+      </div>
+
+      <div class="sidebar-settings-toggle">
+        <button id="sidebar-settings-btn" type="button" class="sidebar-btn sidebar-btn-ghost sidebar-settings-trigger">
+          <svg aria-hidden="true" focusable="false" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          <span>Settings</span>
+          <svg aria-hidden="true" focusable="false" class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+
+      <div id="sidebar-settings" class="sidebar-settings hidden">
+        <div class="sidebar-body">
+          <div class="sidebar-group">
+            <label class="sidebar-label">Project</label>
+            <select id="project-select" class="sidebar-select"><option value="">Loading…</option></select>
+          </div>
+
+          <div class="sidebar-group">
+            <label class="sidebar-label">Model</label>
+            <select id="model-select" class="sidebar-select"><option value="">Loading…</option></select>
+          </div>
+
+          <div class="sidebar-divider"></div>
+
+          <div class="sidebar-group">
+            <label class="sidebar-label">Dev Server</label>
+            <button id="dev-btn" type="button" class="sidebar-btn">Start</button>
+          </div>
+
+          <div class="sidebar-group">
+            <label class="sidebar-label">Tunnel</label>
+            <div class="tunnel-row">
+              <input type="number" id="tunnel-port" class="sidebar-input" placeholder="port" min="1" max="65535">
+              <button id="tunnel-btn" type="button" class="sidebar-btn">Start</button>
+            </div>
+            <div id="tunnel-url" class="tunnel-link hidden"></div>
+          </div>
+
+          <div class="sidebar-divider"></div>
+
+          <button id="status-btn" type="button" class="sidebar-btn sidebar-btn-ghost">View Status</button>
+        </div>
+      </div>
+
+      <div class="sidebar-footer">
+        <button id="theme-toggle" type="button" class="sidebar-btn sidebar-btn-ghost theme-toggle">
+          <svg aria-hidden="true" focusable="false" id="theme-icon-sun" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="hidden"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <svg aria-hidden="true" focusable="false" id="theme-icon-moon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="hidden"><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg aria-hidden="true" focusable="false" id="theme-icon-auto" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+          <span id="theme-label">System</span>
+        </button>
+      </div>
+    </aside>
+
+    <div id="sidebar-overlay" class="sidebar-overlay"></div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header>
+        <button id="sidebar-toggle" type="button" class="icon-btn header-menu-btn" aria-label="Open menu">
+          <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <span class="header-title">Orbit</span>
+        <span class="spacer"></span>
+        <div class="header-badges">
+          <span class="badge hidden" id="dev-badge">DEV</span>
+          <span class="badge hidden" id="tunnel-badge">TNL</span>
+        </div>
+        <button id="git-open-btn" type="button" class="icon-btn" aria-label="Git" title="Git">
+          <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="18" r="3"/><circle cx="6" cy="6" r="3"/><path d="M6 21V9a9 9 0 0 0 9 9"/></svg>
+        </button>
+        <span class="llm-status-pill" id="llm-status-pill" title="LLM status">Disconnected</span>
+        <span class="status-dot" id="status-dot" title="Disconnected"></span>
+      </header>
+
+      <div id="chat-wrap">
+        <div id="chat">
+          <div class="welcome" id="welcome">
+            <div class="welcome-icon">
+              <svg aria-hidden="true" focusable="false" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6"/><path d="M12 19h8"/></svg>
+            </div>
+            <h2>Orbit</h2>
+            <p>Select a project and send a prompt to get started.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Toast container -->
+      <div id="toast-container" class="toast-container"></div>
+
+      <!-- ── File Picker Panel ──────────────────────────── -->
+      <div id="file-picker-panel" class="file-picker-panel hidden">
+        <div class="file-picker-header">
+          <button id="file-picker-back" type="button" class="icon-btn" aria-label="Back">
+            <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+          </button>
+          <span id="file-picker-path" class="file-picker-path">/</span>
+          <span class="spacer"></span>
+          <button id="file-picker-close" type="button" class="icon-btn" aria-label="Close">
+            <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <div id="file-picker-body" class="file-picker-body"></div>
+      </div>
+
+      <div class="input-area">
+        <div id="attached-files" class="attached-files hidden"></div>
+        <div class="quick-actions" id="quick-actions">
+          <button type="button" class="quick-action-pill" data-prompt="Run the tests and fix any failures">Run tests</button>
+          <button type="button" class="quick-action-pill" data-prompt="Fix all lint errors">Fix lint</button>
+          <button type="button" class="quick-action-pill" data-prompt="Explain the current codebase structure and architecture">Explain</button>
+          <button type="button" class="quick-action-pill" data-prompt="Review the recent changes and suggest improvements">Review</button>
+          <button type="button" class="quick-action-pill" data-prompt="Write unit tests for the most recently changed files">Write tests</button>
+        </div>
+        <div class="mode-row">
+          <button type="button" class="mode-btn active" data-mode="agent">Agent</button>
+          <button type="button" class="mode-btn" data-mode="ask">Ask</button>
+          <button type="button" class="mode-btn" data-mode="plan">Plan</button>
+        </div>
+        <div class="input-card">
+          <button id="file-attach-btn" type="button" class="file-attach-btn" title="Attach files" aria-label="Attach files">
+            <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>
+          </button>
+          <textarea id="prompt-input" rows="1" placeholder="Message Orbit…"></textarea>
+          <button id="action-btn" type="button" class="action-btn" title="Send" aria-label="Send">
+            <svg aria-hidden="true" focusable="false" class="action-icon" id="send-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+            <svg aria-hidden="true" focusable="false" class="action-icon hidden" id="stop-icon" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><rect x="4" y="4" width="16" height="16" rx="3"/></svg>
+          </button>
+        </div>
+      </div>
+    </main>
+
+    <!-- ── Git Panel ──────────────────────────────────── -->
+    <div id="git-panel" class="git-panel">
+      <div class="git-header">
+        <button id="git-back-btn" type="button" class="icon-btn" aria-label="Close git panel">
+          <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        </button>
+        <span id="git-branch" class="git-header-branch"></span>
+        <span id="git-ahead-behind" class="git-header-meta"></span>
+        <span class="spacer"></span>
+        <button id="git-refresh-btn" type="button" class="icon-btn" aria-label="Refresh">
+          <svg aria-hidden="true" focusable="false" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 2v6h-6"/><path d="M3 12a9 9 0 0 1 15-6.7L21 8"/><path d="M3 22v-6h6"/><path d="M21 12a9 9 0 0 1-15 6.7L3 16"/></svg>
+        </button>
+      </div>
+
+      <div class="git-tabs">
+        <button type="button" class="git-tab active" data-git-tab="changes">Changes</button>
+        <button type="button" class="git-tab" data-git-tab="branches">Branches</button>
+        <button type="button" class="git-tab" data-git-tab="log">Log</button>
+      </div>
+
+      <div id="git-body" class="git-body"></div>
+
+      <div id="git-stash-row" class="git-stash-row hidden">
+        <button id="git-stash-btn" type="button" class="git-stash-btn">Stash</button>
+        <button id="git-stash-pop-btn" type="button" class="git-stash-btn" disabled>Pop</button>
+      </div>
+
+      <div id="git-bulk-actions" class="git-bulk-actions hidden">
+        <button id="git-stage-all" type="button" class="git-bulk-btn">Stage All</button>
+        <button id="git-unstage-all" type="button" class="git-bulk-btn">Unstage All</button>
+        <button id="git-discard-all" type="button" class="git-bulk-btn" style="color:var(--error)">Discard All</button>
+      </div>
+
+      <div id="git-commit-area" class="git-commit-area hidden">
+        <textarea id="git-commit-msg" class="git-commit-input" rows="1" placeholder="Commit message…"></textarea>
+        <button id="git-commit-btn" type="button" class="git-commit-btn" disabled>Commit</button>
+        <div id="git-push-row" class="git-push-row hidden">
+          <button id="git-push-btn" type="button" class="git-push-btn" disabled>
+            <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 19V5"/><path d="M5 12l7-7 7 7"/></svg>
+            Push
+          </button>
+          <button id="git-fetch-btn" type="button" class="git-fetch-btn">
+            <svg aria-hidden="true" focusable="false" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 5v14"/><path d="M19 12l-7 7-7-7"/></svg>
+            Fetch
+          </button>
+        </div>
+        <div id="git-remote-label" class="git-remote-label hidden"></div>
+      </div>
+
+      <div id="git-branch-actions" class="git-branch-actions hidden">
+        <div class="git-branch-create-row">
+          <input type="text" id="git-new-branch-name" class="git-branch-create-input" placeholder="New branch name…" autocomplete="off" autocapitalize="off" spellcheck="false">
+          <button id="git-create-branch-btn" type="button" class="git-branch-create-btn" disabled>Create</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Git Diff View ──────────────────────────────── -->
+    <div id="git-diff-view" class="git-diff-view">
+      <div class="git-diff-header">
+        <button id="git-diff-back" type="button" class="icon-btn" aria-label="Back">
+          <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M19 12H5"/><path d="M12 19l-7-7 7-7"/></svg>
+        </button>
+        <span id="git-diff-filename" class="git-diff-filename"></span>
+      </div>
+      <div class="git-diff-body">
+        <div id="git-diff-content" class="git-diff-content"></div>
+      </div>
+      <div id="git-diff-footer" class="git-diff-footer">
+        <button id="git-diff-action" type="button" class="git-diff-action-btn"></button>
+      </div>
+    </div>
+
+    <!-- ── Confirm Dialog (reusable) ─────────────────── -->
+    <div id="git-confirm-overlay" class="git-confirm-overlay hidden">
+      <div class="git-confirm-card">
+        <div class="git-confirm-title" id="git-confirm-title"></div>
+        <div class="git-confirm-desc" id="git-confirm-desc"></div>
+        <div class="git-confirm-btns">
+          <button type="button" class="git-confirm-cancel" id="git-confirm-cancel">Cancel</button>
+          <button type="button" class="git-confirm-go" id="git-confirm-ok"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Agent Approval Modal (ACP) ─────────────────── -->
+    <div id="agent-approval-overlay" class="agent-approval-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="agent-approval-title">
+      <div class="agent-approval-card">
+        <div class="agent-approval-title" id="agent-approval-title"></div>
+        <div class="agent-approval-desc" id="agent-approval-desc"></div>
+        <div id="agent-approval-body" class="agent-approval-body"></div>
+        <div class="agent-approval-btns" id="agent-approval-btns"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── Connection Banner ────────────────────────────── -->
+  <div id="connection-banner" class="connection-banner hidden">
+    <span id="connection-banner-text">Reconnecting…</span>
+  </div>
+
+<script src="/app.js"></script>
+</body>
+</html>

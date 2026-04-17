@@ -1,0 +1,127 @@
+Orbit Source-Available License
+Version 1.0, April 2026
+
+Copyright (c) 2026 Solixx. All rights reserved.
+
+1. Definitions
+
+   "Software" means the source code, documentation, assets, and any other
+   materials contained in this repository.
+
+   "Licensor" means the copyright holder named above.
+
+   "You" (or "Your") means an individual or legal entity exercising
+   permissions granted by this License.
+
+   "Commercial Use" means any use of the Software, in whole or in part,
+   that is primarily intended for or directed toward commercial advantage
+   or monetary compensation. This includes, without limitation: offering
+   the Software (or any work that embeds, wraps, bundles, or derives from
+   it) as a paid product or paid service; using it inside a for-profit
+   product or service offered to third parties; or using it as part of a
+   business that generates revenue from its functionality.
+
+   "Derivative Project" means any software product, service, repository,
+   or distribution that is substantially based on the Software or that
+   reproduces a material portion of the Software's source code,
+   structure, or functionality under a different name, brand, or
+   identity.
+
+   "Contribution" means any modification or addition to the Software
+   submitted to the Licensor through a pull request or equivalent
+   mechanism on the official repository.
+
+2. Grant of Rights
+
+   Subject to the terms and conditions of this License, the Licensor
+   grants You a worldwide, royalty-free, non-exclusive, non-transferable,
+   revocable license to:
+
+   (a) clone, download, install, and run the Software on hardware
+       controlled by You, for Your own personal or internal (non-
+       commercial) use;
+
+   (b) modify the Software locally for the sole purpose of using it
+       Yourself or of preparing a Contribution to be submitted back to
+       the Licensor;
+
+   (c) submit Contributions to the official repository, which the
+       Licensor may accept, reject, or request changes to at its sole
+       discretion.
+
+3. Restrictions
+
+   The following are NOT permitted without prior, express, written
+   permission from the Licensor:
+
+   (a) Commercial Use of the Software or any portion of it;
+
+   (b) publishing, distributing, hosting, sublicensing, selling, renting,
+       leasing, or otherwise making the Software (modified or not)
+       available to third parties;
+
+   (c) creating or publishing a Derivative Project by any party other
+       than the Licensor, including rebranded forks, competing
+       implementations substantially based on the Software, or
+       repositories that republish the Software under a different name;
+
+   (d) removing, altering, or obscuring any copyright, trademark, or
+       license notice contained in the Software;
+
+   (e) using the name "Orbit", the Licensor's name, or any associated
+       logos or trademarks to endorse or promote products or services
+       derived from the Software.
+
+4. Contributions
+
+   By submitting a Contribution, You grant the Licensor a perpetual,
+   worldwide, royalty-free, irrevocable license to use, reproduce,
+   modify, publish, sublicense, and distribute Your Contribution as part
+   of the Software under this License or any future license chosen by
+   the Licensor. You represent that You have the right to grant this
+   license and that Your Contribution is Your original work or is
+   otherwise properly attributed.
+
+5. No Other Rights
+
+   No rights are granted under this License other than those expressly
+   set forth herein. All rights not expressly granted are reserved by
+   the Licensor. For uses not permitted by this License (including any
+   Commercial Use or creation of a Derivative Project), You must obtain
+   a separate written license from the Licensor. Inquiries may be
+   directed to the contact listed on the official repository.
+
+6. Termination
+
+   This License and the rights granted hereunder will terminate
+   automatically upon any breach by You of its terms. Upon termination
+   You must cease all use of the Software and destroy all copies in Your
+   possession or control. Sections 4 (Contributions), 5 (No Other
+   Rights), 7 (Disclaimer of Warranty), and 8 (Limitation of Liability)
+   survive termination.
+
+7. Disclaimer of Warranty
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+   EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+   MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, TITLE, AND NON-
+   INFRINGEMENT. YOU ASSUME ALL RISK ARISING FROM USE OF THE SOFTWARE.
+
+8. Limitation of Liability
+
+   IN NO EVENT SHALL THE LICENSOR BE LIABLE FOR ANY DIRECT, INDIRECT,
+   INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING
+   BUT NOT LIMITED TO LOSS OF DATA, LOSS OF PROFITS, OR BUSINESS
+   INTERRUPTION) ARISING IN ANY WAY OUT OF THE USE OF OR INABILITY TO
+   USE THE SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+9. Governing Law
+
+   This License shall be interpreted in accordance with general
+   principles of international copyright law. Any disputes arising out
+   of or in connection with this License shall be resolved in the
+   jurisdiction of the Licensor's principal place of residence, unless
+   otherwise agreed in writing.
+
+For commercial licensing inquiries, please open an issue on the official
+repository or contact the Licensor directly.

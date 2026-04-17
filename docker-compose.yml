@@ -1,0 +1,17 @@
+services:
+  orbit:
+    build: .
+    ports:
+      - "${PORT:-4000}:4000"
+    environment:
+      - PORT=4000
+      - HOST=0.0.0.0
+      - AUTH_TOKEN=${AUTH_TOKEN:-}
+      - NGROK_AUTHTOKEN=${NGROK_AUTHTOKEN:-}
+      - CURSOR_API_KEY=${CURSOR_API_KEY:-}
+      - PROJECTS_DIR=${PROJECTS_DIR:-}
+      - PROMPT_TIMEOUT_MS=${PROMPT_TIMEOUT_MS:-300000}
+      - AGENT_BIN=${AGENT_BIN:-agent}
+    volumes:
+      - ${PROJECTS_DIR:-./}:/projects:ro
+    restart: unless-stopped
