@@ -1,26 +1,26 @@
 # Orbit
 
-Self-hosted web UI for controlling Cursor CLI from your phone or tablet. Runs on your Mac, accessed privately via Tailscale. Your prompts never leave your devices.
+Self-hosted web UI for controlling Cursor CLI from your phone, tablet, or another computer. Runs on your macOS or Windows machine, accessed privately via Tailscale. Your prompts never leave your devices.
 
 > ## Security notice — do NOT expose this server to the public internet
 >
-> Orbit executes `cursor`, `git`, and dev-server commands against your local codebase. Exposing it on a public IP or a public ngrok tunnel gives anyone who finds the URL the ability to read, modify, and push your code, and to run arbitrary processes on your Mac.
+> Orbit executes `cursor`, `git`, and dev-server commands against your local codebase. Exposing it on a public IP or a public ngrok tunnel gives anyone who finds the URL the ability to read, modify, and push your code, and to run arbitrary processes on your machine.
 >
 > Only ever run it behind a private network (Tailscale, WireGuard, VPN) or bound to `127.0.0.1`. Always set a strong random `AUTH_TOKEN` (`openssl rand -hex 32`) as a second line of defense.
 
 ## How It Works
 
 ```
-Phone/iPad  ──(Tailscale VPN)──>  Your Mac (Express + Cursor CLI)
+Phone/Tablet/Windows PC  ──(Tailscale VPN)──>  Your macOS/Windows machine (Express + Cursor CLI)
 ```
 
-The web server runs on your Mac alongside Cursor. You access it from your phone via Tailscale (private mesh VPN). ngrok is only used for previewing your actual dev server output, not the control panel.
+The web server runs on your macOS/Windows machine alongside Cursor. You access it from any device with a browser (Android, iOS/iPadOS, Windows, etc.) via Tailscale (private mesh VPN). ngrok is only used for previewing your actual dev server output, not the control panel.
 
 ## Prerequisites
 
 - Node.js 18+
 - [Cursor CLI](https://cursor.com) installed and authenticated (`cursor login` or `agent login`)
-- [Tailscale](https://tailscale.com) installed on your Mac, iPhone, and iPad (free for personal use)
+- [Tailscale](https://tailscale.com) installed on the machine running Orbit (macOS/Windows) and any client devices you’ll use to access it (Android/iOS/Windows) (free for personal use)
 - An [ngrok](https://ngrok.com) account for dev server preview tunnels (free tier works)
 
 ## Setup
@@ -49,15 +49,15 @@ docker run -p 4000:4000 --env-file .env orbit
 
 ## Tailscale Setup
 
-1. Install Tailscale on your Mac, iPhone, and iPad
+1. Install Tailscale on your macOS/Windows machine and on your client device(s) (Android/iOS/Windows)
 2. Sign in with the same account on all devices
-3. Find your Mac's Tailscale IP:
+3. Find your machine's Tailscale IP:
    ```bash
    tailscale ip -4
    # Example output: 100.100.50.1
    ```
 4. Start Orbit: `npm run dev`
-5. Open `http://100.100.50.1:4000` on your phone/iPad
+5. Open `http://100.100.50.1:4000` on your phone/tablet/PC
 6. Bookmark it or add to your home screen for quick access (PWA supported)
 
 ## Environment Variables
