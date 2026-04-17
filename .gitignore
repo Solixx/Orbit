@@ -25,3 +25,6 @@ session-store.json.tmp
 /docs
 
 .DS_Store
+
+/private
+/private/*

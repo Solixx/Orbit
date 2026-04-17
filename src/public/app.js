@@ -81,7 +81,7 @@
     try {
       new Notification(title, {
         body: body,
-        icon: "/icon-192.svg",
+        icon: "/icon_192.png",
         tag: "orbit-prompt",
       });
     } catch (e) { /* ignore */ }
@@ -707,7 +707,7 @@
 
   function showWelcome() {
     chat.innerHTML = '<div class="welcome" id="welcome">'
-      + '<div class="welcome-icon"><svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6"/><path d="M12 19h8"/></svg></div>'
+      + '<div class="welcome-icon" aria-hidden="true"><img src="/icon_192.png" alt="" width="192" height="192" decoding="async" /></div>'
       + '<h2>Orbit</h2>'
       + '<p>Select a project and send a prompt to get started.</p>'
       + '</div>';

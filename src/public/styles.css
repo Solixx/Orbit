@@ -207,6 +207,20 @@
       flex-shrink: 0;
     }
 
+    .sidebar-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    .sidebar-brand-icon {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      flex-shrink: 0;
+    }
+
     .sidebar-logo {
       font-size: 1.05rem;
       font-weight: 800;
@@ -833,9 +847,14 @@
     }
 
     .welcome-icon {
-      color: var(--text-3);
       margin-bottom: 4px;
-      opacity: 0.5;
+    }
+
+    .welcome-icon img {
+      display: block;
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
     }
 
     .welcome h2 {

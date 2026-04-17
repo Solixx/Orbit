@@ -8,8 +8,8 @@
   <meta name="theme-color" content="#0b0b11" id="meta-theme">
   <meta name="description" content="Self-hosted web UI for Orbit — remote Cursor CLI access from phone or tablet">
   <link rel="manifest" href="/manifest.json">
-  <link rel="icon" type="image/svg+xml" href="/icon-192.svg">
-  <link rel="apple-touch-icon" href="/icon-192.svg">
+  <link rel="icon" type="image/png" sizes="192x192" href="/icon_192.png">
+  <link rel="apple-touch-icon" href="/icon_192.png">
   <link rel="stylesheet" href="/styles.css">
   <title>Orbit</title>
 </head>
@@ -32,7 +32,10 @@
     <!-- Sidebar (drawer on mobile, fixed on tablet+) -->
     <aside id="sidebar" class="sidebar">
       <div class="sidebar-header">
-        <span class="sidebar-logo">Orbit</span>
+        <div class="sidebar-brand">
+          <img class="sidebar-brand-icon" src="/icon_192.png" alt="" width="192" height="192" decoding="async" />
+          <span class="sidebar-logo">Orbit</span>
+        </div>
         <button id="new-chat-btn" type="button" class="icon-btn new-chat-btn" aria-label="New chat" title="New chat">
           <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
         </button>
@@ -121,8 +124,8 @@
       <div id="chat-wrap">
         <div id="chat">
           <div class="welcome" id="welcome">
-            <div class="welcome-icon">
-              <svg aria-hidden="true" focusable="false" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 17l6-6-6-6"/><path d="M12 19h8"/></svg>
+            <div class="welcome-icon" aria-hidden="true">
+              <img src="/icon_192.png" alt="" width="192" height="192" decoding="async" />
             </div>
             <h2>Orbit</h2>
             <p>Select a project and send a prompt to get started.</p>
