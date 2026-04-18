@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [18, 20, 22]
+        # Vitest/Vite/Rolldown require util.styleText (Node >= 20.12)
+        node-version: [20, 22]
 
     steps:
       - uses: actions/checkout@v4
