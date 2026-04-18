@@ -37,7 +37,7 @@
   "author": "Solixx (https://github.com/Solixx)",
   "license": "SEE LICENSE IN LICENSE",
   "engines": {
-    "node": ">=18"
+    "node": ">=20.12.0"
   },
   "type": "module",
   "bugs": {
