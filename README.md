@@ -18,7 +18,7 @@ The web server runs on your macOS/Windows machine alongside Cursor. You access i
 
 ## Prerequisites
 
-- Node.js 18+
+- Node.js 20.12+
 - [Cursor CLI](https://cursor.com) installed and authenticated (`cursor login` or `agent login`)
 - [Tailscale](https://tailscale.com) installed on the machine running Orbit (macOS/Windows) and any client devices you’ll use to access it (Android/iOS/Windows) (free for personal use)
 - An [ngrok](https://ngrok.com) account for dev server preview tunnels (free tier works)
