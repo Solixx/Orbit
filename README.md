@@ -192,6 +192,10 @@ In short:
 
 For commercial licensing or any use not covered above, open an issue on this repository.
 
+## Community
+
+[Discord](https://discord.gg/A5nPrsbc47) — discussion and support for Orbit.
+
 ## Contributing
 
 Pull requests are welcome. See [CONTRIBUTING.md](./CONTRIBUTING.md) for setup, conventions, and PR process. By submitting a contribution you agree to the contribution terms in the [LICENSE](./LICENSE).
